@@ -1,6 +1,5 @@
 <?php
 
-
 namespace MauticPlugin\MauticMultiDomainBundle\Model;
 
 use Doctrine\ORM\EntityManager;
@@ -62,19 +61,19 @@ class MultidomainModel extends FormModel
     // private static $entityManager;
 
     public function __construct(
-            EntityManagerInterface $em,
-            CorePermissions $security,
-            EventDispatcherInterface $dispatcher,
-            UrlGeneratorInterface $router,
-            Translator $translator,
-            UserHelper $userHelper,
-            LoggerInterface $logger,
-            CoreParametersHelper $coreParametersHelper,
-            \Mautic\FormBundle\Model\FormModel $formModel,
-            TrackableModel $trackableModel,
-            FieldModel $leadFieldModel,
-            ContactTracker $contactTracker
-        ) {
+        EntityManagerInterface $em,
+        CorePermissions $security,
+        EventDispatcherInterface $dispatcher,
+        UrlGeneratorInterface $router,
+        Translator $translator,
+        UserHelper $userHelper,
+        LoggerInterface $logger,
+        CoreParametersHelper $coreParametersHelper,
+        \Mautic\FormBundle\Model\FormModel $formModel,
+        TrackableModel $trackableModel,
+        FieldModel $leadFieldModel,
+        ContactTracker $contactTracker
+    ) {
         parent::__construct(
             $em,
             $security,
@@ -189,6 +188,19 @@ class MultidomainModel extends FormModel
         $this->getRepository()->saveEntity($entity);
     }
 
+    public function generateMessageId(Multidomain $multidomain)
+    {
+        $url   = $multidomain->getDomain();
+        $parts = parse_url($url);
+        if (!isset($parts['host'])) {
+            throw new \Exception('InvalidDomainError');
+        }
+
+        $messageIdSuffix = '@'.$parts['host'];
+
+        return bin2hex(random_bytes(16)).$messageIdSuffix;
+    }
+
     /**
      * Get whether the color is light or dark.
      *
@@ -211,7 +223,7 @@ class MultidomainModel extends FormModel
      *
      * @return bool|MultidomainEvent|void
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
+     * @throws MethodNotAllowedHttpException
      */
     protected function dispatchEvent($action, &$entity, $isNew = false, Event $event = null): ?Event
     {

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace MauticPlugin\MauticMultiDomainBundle\EventListener;
 
 use Mautic\AssetBundle\Helper\TokenHelper as AssetTokenHelper;
