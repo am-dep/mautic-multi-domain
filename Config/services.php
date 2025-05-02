@@ -29,6 +29,6 @@ return function (ContainerConfigurator $configurator) {
 
     $services->alias(
         'mautic.multidomain.model.multidomain',
-        \MauticPlugin\MauticMultiDomainBundle\Model\MultidomainModel::class
+        MauticPlugin\MauticMultiDomainBundle\Model\MultidomainModel::class
     );
 };

@@ -37,13 +37,13 @@ return [
     'services' => [
         'forms' => [
             'mautic.form.type.multidomain' => [
-                'class' => \MauticPlugin\MauticMultiDomainBundle\Form\Type\MultidomainType::class,
+                'class' => MauticPlugin\MauticMultiDomainBundle\Form\Type\MultidomainType::class,
             ],
         ],
         'models' => [],
         'events' => [
             'mautic.multidomain.subscriber.multidomain' => [
-                'class'     => \MauticPlugin\MauticMultiDomainBundle\EventListener\MultidomianSubscriber::class,
+                'class'     => MauticPlugin\MauticMultiDomainBundle\EventListener\MultidomianSubscriber::class,
                 'arguments' => [
                     'router',
                     'mautic.helper.ip_lookup',
@@ -56,7 +56,7 @@ return [
                 ],
             ],
             'mautic.multidomain.subscriber.emailbuilder' => [
-                'class'     => \MauticPlugin\MauticMultiDomainBundle\EventListener\BuilderSubscriber::class,
+                'class'     => MauticPlugin\MauticMultiDomainBundle\EventListener\BuilderSubscriber::class,
                 'arguments' => [
                     'mautic.helper.core_parameters',
                     'mautic.email.model.email',
