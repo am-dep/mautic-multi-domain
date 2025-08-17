@@ -71,7 +71,7 @@ class MultidomianSubscriber implements EventSubscriberInterface
         PageTokenHelper $pageTokenHelper,
         AssetTokenHelper $assetTokenHelper,
         MultidomainModel $multidomainModel,
-        RequestStack $requestStack
+        RequestStack $requestStack,
     ) {
         $this->router                 = $router;
         $this->ipHelper               = $ipLookupHelper;

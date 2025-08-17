@@ -29,7 +29,7 @@ class BuildJsSubscriber implements EventSubscriberInterface
     public function __construct(
         AssetsHelper $assetsHelper,
         RequestStack $requestStack,
-        RouterInterface $router
+        RouterInterface $router,
     ) {
         $this->assetsHelper   = $assetsHelper;
         $this->requestStack   = $requestStack;

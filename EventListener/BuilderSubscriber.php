@@ -69,7 +69,7 @@ class BuilderSubscriber implements EventSubscriberInterface
         TranslatorInterface $translator,
         EntityManager $entityManager,
         MultidomainModel $multidomainModel,
-        RouterInterface $router
+        RouterInterface $router,
     ) {
         $this->coreParametersHelper = $coreParametersHelper;
         $this->emailModel           = $emailModel;
@@ -145,7 +145,6 @@ class BuilderSubscriber implements EventSubscriberInterface
                 $messageId    = $this->multidomainModel->generateMessageId($multiDomain);
                 $event->addTextHeader('Message-ID', $messageId);
             }
-
         }
 
         if (!$unsubscribeText) {
@@ -262,7 +261,7 @@ class BuilderSubscriber implements EventSubscriberInterface
         $absolute = true,
         $clickthrough = [],
         $utmTags = [],
-        $domain = null
+        $domain = null,
     ) {
         if ($domain) {
             $parseUrl = parse_url($domain);

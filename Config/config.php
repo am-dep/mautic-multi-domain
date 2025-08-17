@@ -9,11 +9,11 @@ return [
         'main' => [
             'mautic_multidomain_index' => [
                 'path'       => '/multidomain/{page}',
-                'controller' => 'MauticPlugin\MauticMultiDomainBundle\Controller\MultidomainController:indexAction',
+                'controller' => 'MauticPlugin\MauticMultiDomainBundle\Controller\MultidomainController::indexAction',
             ],
             'mautic_multidomain_action' => [
                 'path'       => '/multidomain/{objectAction}/{objectId}',
-                'controller' => 'MauticPlugin\MauticMultiDomainBundle\Controller\MultidomainController:executeAction',
+                'controller' => 'MauticPlugin\MauticMultiDomainBundle\Controller\MultidomainController::executeAction',
             ],
         ],
         'api' => [
@@ -30,44 +30,13 @@ return [
             'mautic.multidomain.menu' => [
                 'route'     => 'mautic_multidomain_index',
                 'priority'  => 10,
-                'iconClass' => 'fa-globe',
+                'iconClass' => 'ri-globe-fill',
             ],
         ],
     ],
     'services' => [
-        'forms' => [
-            'mautic.form.type.multidomain' => [
-                'class' => MauticPlugin\MauticMultiDomainBundle\Form\Type\MultidomainType::class,
-            ],
-        ],
+        'forms'  => [],
         'models' => [],
-        'events' => [
-            'mautic.multidomain.subscriber.multidomain' => [
-                'class'     => MauticPlugin\MauticMultiDomainBundle\EventListener\MultidomianSubscriber::class,
-                'arguments' => [
-                    'router',
-                    'mautic.helper.ip_lookup',
-                    'mautic.core.model.auditlog',
-                    'mautic.page.model.trackable',
-                    'mautic.page.helper.token',
-                    'mautic.asset.helper.token',
-                    'mautic.multidomain.model.multidomain',
-                    'request_stack',
-                ],
-            ],
-            'mautic.multidomain.subscriber.emailbuilder' => [
-                'class'     => MauticPlugin\MauticMultiDomainBundle\EventListener\BuilderSubscriber::class,
-                'arguments' => [
-                    'mautic.helper.core_parameters',
-                    'mautic.email.model.email',
-                    'mautic.page.model.trackable',
-                    'mautic.page.model.redirect',
-                    'translator',
-                    'doctrine.orm.entity_manager',
-                    'mautic.multidomain.model.multidomain',
-                    'router',
-                ],
-            ],
-        ],
+        'events' => [],
     ],
 ];

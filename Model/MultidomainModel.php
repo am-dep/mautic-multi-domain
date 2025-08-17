@@ -72,7 +72,7 @@ class MultidomainModel extends FormModel
         \Mautic\FormBundle\Model\FormModel $formModel,
         TrackableModel $trackableModel,
         FieldModel $leadFieldModel,
-        ContactTracker $contactTracker
+        ContactTracker $contactTracker,
     ) {
         parent::__construct(
             $em,
