@@ -4,7 +4,7 @@ namespace MauticPlugin\MauticMultiDomainBundle\Controller;
 
 use Mautic\CoreBundle\Controller\AbstractStandardFormController;
 use Mautic\CoreBundle\Form\Type\DateRangeType;
-use MauticPlugin\MauticSpintaxBundle\Model\EmailVariation;
+use MauticPlugin\MauticMultiDomainBundle\Entity\Multidomain;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,17 +18,57 @@ class MultidomainController extends AbstractStandardFormController
     /**
      * @return string
      */
-    protected function getControllerBase()
+    protected function getModelName(): string
     {
-        return 'MauticMultiDomainBundle:Multidomain';
+        return 'multidomain';
     }
 
     /**
      * @return string
      */
-    protected function getModelName()
+    protected function getJsLoadMethodPrefix(): string
     {
         return 'multidomain';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRouteBase(): string
+    {
+        return 'multidomain';
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getSessionBase($objectId = null): string
+    {
+        return 'multidomain';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTemplateBase(): string
+    {
+        return '@MauticMultiDomain/Multidomain';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTranslationBase(): string
+    {
+        return 'mautic.multidomain';
+    }
+
+    /**
+     * @return class-string
+     */
+    protected function getEntityClass(): string
+    {
+        return Multidomain::class;
     }
 
     /**
@@ -81,7 +121,7 @@ class MultidomainController extends AbstractStandardFormController
      */
     public function viewAction($objectId)
     {
-        return parent::viewStandard($objectId, 'maultidomain', 'plugin.maultidomain');
+        return parent::viewStandard($objectId, 'multidomain', 'plugin.multidomain');
     }
 
     /**

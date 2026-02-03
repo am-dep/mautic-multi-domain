@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityManager;
 use Mautic\CoreBundle\Event\TokenReplacementEvent;
 use Mautic\CoreBundle\Helper\Chart\ChartQuery;
 use Mautic\CoreBundle\Helper\Chart\LineChart;
-use Mautic\CoreBundle\Helper\TemplatingHelper;
+
 use Mautic\CoreBundle\Model\FormModel;
 use Mautic\LeadBundle\Entity\Lead;
 use Mautic\LeadBundle\Model\FieldModel;
@@ -25,8 +25,7 @@ use Mautic\PageBundle\Model\TrackableModel;
 use MauticPlugin\MauticMultiDomainBundle\Entity\Multidomain;
 use MauticPlugin\MauticMultiDomainBundle\Event\MultidomainEvent;
 use MauticPlugin\MauticMultiDomainBundle\Form\Type\MultidomainType;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -36,7 +35,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class MultidomainModel extends FormModel
 {
     /**
-     * @var ContainerAwareEventDispatcher
+     * @var EventDispatcherInterface
      */
     protected $dispatcher;
 
@@ -49,11 +48,6 @@ class MultidomainModel extends FormModel
      * @var TrackableModel
      */
     protected $trackableModel;
-
-    /**
-     * @var TemplatingHelper
-     */
-    protected $templating;
 
     /**
      * @var FieldModel
@@ -76,7 +70,6 @@ class MultidomainModel extends FormModel
     public function __construct(
         \Mautic\FormBundle\Model\FormModel $formModel,
         TrackableModel $trackableModel,
-        TemplatingHelper $templating,
         EventDispatcherInterface $dispatcher,
         FieldModel $leadFieldModel,
         ContactTracker $contactTracker,
@@ -84,7 +77,6 @@ class MultidomainModel extends FormModel
     ) {
         $this->formModel      = $formModel;
         $this->trackableModel = $trackableModel;
-        $this->templating     = $templating;
         $this->dispatcher     = $dispatcher;
         $this->leadFieldModel = $leadFieldModel;
         $this->contactTracker = $contactTracker;
@@ -236,7 +228,7 @@ class MultidomainModel extends FormModel
                 $event->setEntityManager($this->em);
             }
 
-            $this->dispatcher->dispatch($name, $event);
+            $this->dispatcher->dispatch($event, $name);
 
             return $event;
         } else {

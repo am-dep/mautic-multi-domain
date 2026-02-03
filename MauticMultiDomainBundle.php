@@ -2,8 +2,8 @@
 
 namespace MauticPlugin\MauticMultiDomainBundle;
 
+use Doctrine\ORM\EntityManager;
 use Mautic\PluginBundle\Bundle\PluginBundleBase;
-use Mautic\CoreBundle\Factory\MauticFactory;
 use Mautic\PluginBundle\Entity\Plugin;
 
 /**
@@ -11,10 +11,22 @@ use Mautic\PluginBundle\Entity\Plugin;
  */
 class MauticMultiDomainBundle extends PluginBundleBase
 {
-    public static function onPluginInstall(Plugin $plugin, MauticFactory $factory, $metadata = null, $installedSchema = null)
+    /**
+     * Called during plugin installation to create database tables.
+     */
+    public static function onPluginInstall(Plugin $plugin, ?object $factory = null, $metadata = null, $installedSchema = null): void
     {
+        // In Mautic 5+, we need to get the EntityManager from the container
+        // The factory parameter is deprecated, but we still receive it for backwards compatibility
+        if ($factory !== null && method_exists($factory, 'getEntityManager')) {
+            $em = $factory->getEntityManager();
+        } else {
+            // Cannot proceed without entity manager
+            return;
+        }
+
         if (null === $metadata) {
-            $metadata = self::getMetadata($factory->getEntityManager());
+            $metadata = self::getMetadata($em);
         }
 
         if (null !== $metadata) {
@@ -28,10 +40,10 @@ class MauticMultiDomainBundle extends PluginBundleBase
      *
      * @return array|null
      */
-    private static function getMetadata(EntityManager $em)
+    private static function getMetadata(EntityManager $em): ?array
     {
         $allMetadata   = $em->getMetadataFactory()->getAllMetadata();
-        $currentSchema = $em->getConnection()->getSchemaManager()->createSchema();
+        $currentSchema = $em->getConnection()->createSchemaManager()->introspectSchema();
 
         $classes = [];
 
