@@ -141,7 +141,7 @@ class MultidomainModel extends FormModel
      * @param Multidomain      $entity
      * @param bool|false $unlock
      */
-    public function saveEntity($entity, $unlock = true)
+    public function saveEntity($entity, $unlock = true): void
     {
         parent::saveEntity($entity, $unlock);
         $this->getRepository()->saveEntity($entity);
