@@ -174,12 +174,8 @@ class MultidomainModel extends FormModel
 
     /**
      * {@inheritdoc}
-     *
-     * @return bool|MultidomainEvent|void
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
      */
-    protected function dispatchEvent($action, &$entity, $isNew = false, Event $event = null)
+    protected function dispatchEvent($action, &$entity, $isNew = false, ?Event $event = null): ?Event
     {
         if (!$entity instanceof Multidomain) {
             throw new MethodNotAllowedHttpException(['Multidomain']);
@@ -211,9 +207,9 @@ class MultidomainModel extends FormModel
             $this->dispatcher->dispatch($event, $name);
 
             return $event;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     // Get path of the config.php file.
