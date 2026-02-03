@@ -102,7 +102,7 @@ class Multidomain extends FormEntity
      *
      * @param $metadata
      */
-    public static function loadApiMetadata(ApiMetadataDriver $metadata)
+    public static function loadApiMetadata(ApiMetadataDriver $metadata): void
     {
         $metadata->setGroupPrefix('multidomain')
             ->addListProperties(
