@@ -12,7 +12,6 @@
 namespace MauticPlugin\MauticMultiDomainBundle\Model;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use Doctrine\ORM\EntityManager;
 use Mautic\CoreBundle\Event\TokenReplacementEvent;
 use Mautic\CoreBundle\Helper\Chart\ChartQuery;
 use Mautic\CoreBundle\Helper\Chart\LineChart;
@@ -35,11 +34,6 @@ use Symfony\Component\DependencyInjection\Reference;
 class MultidomainModel extends FormModel
 {
     /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
-
-    /**
      * @var \Mautic\FormBundle\Model\FormModel
      */
     protected $formModel;
@@ -60,11 +54,6 @@ class MultidomainModel extends FormModel
     protected $contactTracker;
 
     /**
-     * 
-     * @var EntityManager $entityManager
-     */
-    private static $entityManager;
-    /**
      * MultidomainModel constructor.
      */
     public function __construct(
@@ -72,15 +61,13 @@ class MultidomainModel extends FormModel
         TrackableModel $trackableModel,
         EventDispatcherInterface $dispatcher,
         FieldModel $leadFieldModel,
-        ContactTracker $contactTracker,
-        EntityManager $entityManager
+        ContactTracker $contactTracker
     ) {
         $this->formModel      = $formModel;
         $this->trackableModel = $trackableModel;
         $this->dispatcher     = $dispatcher;
         $this->leadFieldModel = $leadFieldModel;
         $this->contactTracker = $contactTracker;
-        static::$entityManager = $entityManager;
     }
 
     /**

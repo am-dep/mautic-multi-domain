@@ -49,7 +49,6 @@ return [
                     'event_dispatcher',
                     'mautic.lead.model.field',
                     'mautic.tracker.contact',
-                    'doctrine.orm.entity_manager',
                 ],
                 'alias' => 'model.multidomain.multidomain'
             ],
