@@ -114,12 +114,8 @@ class MultidomainModel extends FormModel
 
     /**
      * {@inheritdoc}
-     *
-     * @param null $id
-     *
-     * @return Multidomain
      */
-    public function getEntity($id = null)
+    public function getEntity($id = null): ?object
     {
         if (null === $id) {
             return new Multidomain();
